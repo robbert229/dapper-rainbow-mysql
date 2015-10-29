@@ -6,8 +6,11 @@ This project is a reimplementation of Dapper.Rainbow designed for MySql. It is a
 
 
     class User {
+      [PrimaryKey]
       public int Id { get; set; }
+      [NotNull]
       public String Email { get; set; }
+      [NotNull]
       public String Password { get; set; }
       public String Name { get; set; }
     }
@@ -25,18 +28,12 @@ This project is a reimplementation of Dapper.Rainbow designed for MySql. It is a
           //drop the table if it exists
           db.Execute ("drop table if exists user;");
           
-          //create the table
-          db.Execute (@"create table user (
-  							Id int NOT NULL,
-  							Email varchar(100), 
-  							Password varchar(32), 
-  							Name varchar(32), 
-  							PRIMARY KEY(Id));");
+          try {
+            db.Users.Create()
+          } catch (TableAlreadyExistsException){ }
           
-          /* 
-            
+          /*  
             Do somthing interesting in here 
-          
           */
         }
       }
@@ -45,14 +42,56 @@ This project is a reimplementation of Dapper.Rainbow designed for MySql. It is a
 
 How it finds the tables
 ------------
-
 Dapper.Rainbow.MySql knows what table to query based on the name of the class. 
 In this situation the table that Rainbow looks in is the User table. It is not
 pluralized. 
 
-API
+
+Table Creation
 ----------
+dapper-rainbow-mysql also has functionality that doesn't exist in dapper-rainbow.
+dapper-rainbow-mysql has the ability to intelligently create a table from your 
+POCOs (Plain Old Clr Object) automatically. You add constraints and modifiers 
+through attributes.
+
+**WARNING** currently automatic table creation is in early beta. It doesn't support
+all types and will through an exception if you try to use somthing that it is not
+familiar. It also doesn't allow any properties to be non primitive excluding DateTime.
+
+
+### To Add A Primary Key Constraint
     
+    class {
+        [PrimaryKey]
+        int Id { get; set; }
+    }
+
+### To Add A Not Null Constraint
+
+    class {
+        [NotNull]
+        string Name { get; set; }
+    }
+    
+### To Add Auto Increment
+    
+    class {
+        [AutoIncrement]
+        int customerNumber { get; set; }
+    }
+
+### Create Table From Model ~ Throws exception if table already exists
+    db.Users.Create()
+
+### Create Table From Model
+    db.Users.TryCreate()
+
+### Drop Table
+    db.Users.Drop()
+
+
+Model Interaction
+----------
 ### Get All The Users
     IEnumerable<User> all = db.Users.All();
     
@@ -69,9 +108,9 @@ API
   
 ### Insert A User
     long uid = db.Users.Insert (
-      new { Email="foolio@coolio.com", 
-            Name="Foolio Coolio", 
-            Password="AHashedPasswordOfLengthThirtyTwo"});
+        new { Email="foolio@coolio.com", 
+              Name="Foolio Coolio", 
+              Password="AHashedPasswordOfLengthThirtyTwo"});
 
 ### Insert Or Update A User
     int uid = db.Users.InsertOrUpdate(user);
