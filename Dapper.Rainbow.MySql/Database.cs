@@ -59,13 +59,17 @@ namespace Dapper
             }
 
 			private void CreateTable(){
-				var wrapper = new ModelWrapper(typeof(T));
+				var sql = CreateTableSql ();
+				database.Execute (sql);
+			}
 
+			internal string CreateTableSql ()
+			{
+				var wrapper = new ModelWrapper (typeof(T));
 				var sql = "create table if not exists " + TableName + " (";
 				sql += string.Join (", ", wrapper.getTableColumns ());
 				sql += ");";
-
-				database.Execute (sql);
+				return sql;
 			}
 
 			/// <summary>

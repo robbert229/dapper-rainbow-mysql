@@ -24,7 +24,7 @@ namespace Dapper.TableGeneration
 
 		private string getConstraintMySql(){
 			if (_constraints.Count > 0)
-				return ", " + string.Join (" , ", _constraints);
+				return ", " + string.Join (", ", _constraints);
 			return "";
 		}
 

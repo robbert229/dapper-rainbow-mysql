@@ -1,7 +1,7 @@
 ﻿using System;
-using PetaTest;
 using System.Collections.Generic;
 using Dapper.TableGeneration;
+using NUnit.Framework;
 
 namespace Dapper
 {

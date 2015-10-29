@@ -1,13 +1,14 @@
 ﻿using System;
-using PetaTest;
 using Dapper;
 using MySql.Data.MySqlClient;
+using NUnit.Framework;
 
 namespace Test
 {
 	[TestFixture]
 	public class TableOperationTests
 	{
+		private static string _connectionString = "server=localhost;user=user;password=password;database=test;";
 		MySqlConnection cn;
 
 		class UserDB : Database<UserDB>
@@ -19,17 +20,16 @@ namespace Test
 			[PrimaryKey]
 			public int Id { get; set; }
 		}
-
-		[TestFixtureSetUp]
+			
+		[SetUp]
 		public void Setup()
 		{            
-			cn = new MySqlConnection(
-				System.Configuration.ConfigurationManager.ConnectionStrings[0].ConnectionString);
+			cn = new MySqlConnection(_connectionString);
 			cn.Open();
 			db = UserDB.Init(cn, 30);
 		}
 
-		[TestFixtureTearDown]
+		[TearDown]
 		public void Teardown(){
 			cn.Close ();
 		}

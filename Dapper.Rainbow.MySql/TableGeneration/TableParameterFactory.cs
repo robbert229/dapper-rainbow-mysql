@@ -26,7 +26,7 @@ namespace Dapper.TableGeneration
 			} else if (isBoolean (pi)) {
 				return new TableColumn (pi.Name, "BOOL", constraints, modifiers);
 			} else if (isString (pi)) {
-				return new TableColumn (pi.Name, "VARCHAR", constraints, modifiers);
+				return new TableColumn (pi.Name, "VARCHAR(65535)", constraints, modifiers);
 			} else if (isCharacter (pi)) {
 				return new TableColumn (pi.Name, "CHAR", constraints, modifiers);
 			} else if (isDateTime (pi)) {

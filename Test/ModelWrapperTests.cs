@@ -1,9 +1,9 @@
 ﻿using System;
-using PetaTest;
 using Dapper;
 using System.Reflection;
 using System.Linq;
 using Dapper.TableGeneration;
+using NUnit.Framework;
 
 namespace Test
 {
@@ -38,10 +38,10 @@ namespace Test
 		[Test]
 		public void CanGetPrimaryKeyType(){
 			var objWrapper = new ModelWrapper (new User ().GetType());
-			Assert.Equals (objWrapper.getPrimaryKeyType (), typeof(int));
+			Assert.AreEqual(objWrapper.getPrimaryKeyType (), typeof(int));
 
 			var objWrapper2 = new ModelWrapper (new Address ().GetType());
-			Assert.Equals(objWrapper2.getPrimaryKeyType (), typeof(string));
+			Assert.AreEqual(objWrapper2.getPrimaryKeyType (), typeof(string));
 		}
 
 		[Test]
