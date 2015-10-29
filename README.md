@@ -2,6 +2,8 @@ Dapper.Rainbow.MySql
 =======================
 
 This project is a reimplementation of Dapper.Rainbow designed for MySql. It is an addon that gives you basic crud operations while having to write even less sql.
+[![Build status](https://ci.appveyor.com/api/projects/status/avtttl8f5kiirsr4?svg=true)](https://ci.appveyor.com/project/robbert229/dapper-rainbow-mysql)
+
 
     class User {
       public int Id { get; set; }
