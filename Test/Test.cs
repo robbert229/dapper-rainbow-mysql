@@ -21,11 +21,12 @@ namespace Test
 			sql.Where("city = @city", new { city = "Kajang" });
             sql.OrderBy("id DESC");
             sql.OrderBy("city");
+            
             var total = db.Query<long>(count.RawSql, count.Parameters).Single();
             var rows = db.Query<Profile>(selector.RawSql, selector.Parameters);
 
             Assert.Equals(total, 1);
-			Assert.Equals(rows.First().City, "Kajang");
+            Assert.Equals(rows.First().City, "Kajang");
         }        
 
         [Test]
@@ -146,6 +147,7 @@ namespace Test
 	{
 		public int UserId { get; set; }
 		public int SessionId { get; set; }
+		[PrimaryKey]
 		public int NoterId { get; set; }
 		public string Note { get; set; }
 		public DateTime Changed { get; set; }

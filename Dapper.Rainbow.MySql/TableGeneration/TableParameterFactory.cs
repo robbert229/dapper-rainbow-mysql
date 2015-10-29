@@ -21,7 +21,7 @@ namespace Dapper.TableGeneration
 				}
 			}
 
-			if (pi.PropertyType == typeof(int) || pi.PropertyType == typeof(Int32)) {
+			if (isInteger(pi)) {
 				return new TableColumn (pi.Name, "INT", constraints, modifiers);
 			} else if (isBoolean (pi)) {
 				return new TableColumn (pi.Name, "BOOL", constraints, modifiers);
@@ -36,6 +36,11 @@ namespace Dapper.TableGeneration
 			} else {
 				throw new NotSupportedException (pi.GetType().ToString());
 			}
+		}
+
+		static bool isInteger (PropertyInfo pi)
+		{
+			return pi.PropertyType == typeof(int);
 		}
 
 		private static bool isDecimal (PropertyInfo pi)

@@ -39,7 +39,8 @@ namespace Dapper
 	/// adds the not null constraint to the property for table generation
 	/// </summary>
 	public class NotNull : TableModifierAttribute {
-		internal override Modifier getModifier(){
+		internal override Modifier getModifier()
+		{
 			return new NotNullModifier();
 		}
 	} 
@@ -53,6 +54,7 @@ namespace Dapper
 			return new AutoInfrementModifier ();
 		}
 	}
+
 
 	internal class PrimaryKeyConstraint : Constraint
 	{
